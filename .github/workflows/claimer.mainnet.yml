@@ -1,4 +1,4 @@
-name: claimer (testnet)
+name: claimer (mainnet)
 
 on: workflow_dispatch
 
