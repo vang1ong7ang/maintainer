@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Numerics;
 using System.Linq;
-using System.Collections.Generic;
 using Neo;
 using Neo.Network.P2P.Payloads;
 using Neo.Network.RPC;
@@ -10,8 +9,6 @@ using Neo.SmartContract.Native;
 using Neo.Wallets;
 using Neo.VM;
 using Utility = Neo.Network.RPC.Utility;
-
-// using System.Threading.Tasks;
 
 namespace claimer
 {
@@ -34,9 +31,11 @@ namespace claimer
             byte[] script_unclaimed = NativeContract.NEO.Hash.MakeScript("unclaimedGas", target, blocknum);
             BigInteger unclaimed = client.InvokeScriptAsync(script_unclaimed).GetAwaiter().GetResult().Stack[0].GetInteger();
             TransactionManagerFactory factory = new TransactionManagerFactory(client);
+            Console.WriteLine($"BALANCE: {balance}; UNCLAIMED: {unclaimed};");
             byte[] sync = target.MakeScript("sync");
             byte[] claim = target.MakeScript("claim");
-            byte[] script = unclaimed > 1_00000000 ? sync.Concat(claim).ToArray() : balance > 1_00000000 ? claim : null;
+            byte[] script = unclaimed > 10_00000000 ? sync.Concat(claim).ToArray() : balance > 10_00000000 ? claim : null;
+            if (script is null) return;
             TransactionManager manager = factory.MakeTransactionAsync(script!, signers).GetAwaiter().GetResult();
             Transaction tx = manager.AddSignature(keypair).SignAsync().GetAwaiter().GetResult();
             UInt256 txid = client.SendRawTransactionAsync(tx).GetAwaiter().GetResult();
