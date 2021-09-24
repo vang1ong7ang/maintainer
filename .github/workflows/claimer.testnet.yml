@@ -1,4 +1,4 @@
-name: .NET
+name: claimer (testnet)
 
 on: workflow_dispatch
 
