@@ -1,0 +1,23 @@
+name: claimer (testnet)
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Run
+      run: echo ${{ secrets.CONFIG_MAINNET }} | dotnet run --project claimer
+      env:
+        WIF: ${{ secrets.WIF }}
+        RPC: ${{ secrets.RPC_MAINNET }}
+        AGENT: ${{ secrets.AGENT_0 }}
