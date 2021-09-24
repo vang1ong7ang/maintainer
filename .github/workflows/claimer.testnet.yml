@@ -16,7 +16,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Run
-      run: cat ${{ secrets.CONFIG_TESTNET }} | dotnet run --project claimer
+      run: echo ${{ secrets.CONFIG_TESTNET }} | dotnet run --project claimer
       env:
         WIF: ${{ secrets.WIF }}
         RPC: ${{ secrets.RPC_TESTNET }}
