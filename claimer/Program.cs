@@ -34,7 +34,7 @@ namespace claimer
             Console.WriteLine($"BALANCE: {balance}; UNCLAIMED: {unclaimed};");
             byte[] sync = target.MakeScript("sync");
             byte[] claim = target.MakeScript("claim");
-            byte[] script = unclaimed > 1_00000000 ? sync.Concat(claim).ToArray() : balance > 1_00000000 ? claim : null;
+            byte[] script = unclaimed > 10_00000000 ? sync.Concat(claim).ToArray() : balance > 10_00000000 ? claim : null;
             if (script is null) return;
             TransactionManager manager = factory.MakeTransactionAsync(script!, signers).GetAwaiter().GetResult();
             Transaction tx = manager.AddSignature(keypair).SignAsync().GetAwaiter().GetResult();
