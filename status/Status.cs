@@ -30,7 +30,7 @@ namespace Neo.Plugins
                 Console.Error.WriteLine($"NOT FOUND: {block.Index}");
                 return;
             }
-            Console.WriteLine($"{JsonSerializer.Serialize(new { timestamp = block.Timestamp, blocknum = block.Index, rps = rps.ResultStack.Select(v => v.GetInteger()).First(), total_supply = ts.ResultStack.Select(v => v.GetInteger()).First() })}");
+            Console.WriteLine($"{JsonSerializer.Serialize(new { timestamp = block.Timestamp, blocknum = block.Index, rps = rps.ResultStack.Select(v => v.GetInteger().ToString()).First(), total_supply = ts.ResultStack.Select(v => v.GetInteger().ToString()).First() })}");
             Console.Out.Flush();
             Console.Error.Flush();
         }
